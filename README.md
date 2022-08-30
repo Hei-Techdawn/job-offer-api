@@ -10,7 +10,7 @@ default admin user :
 
     insert into my_user values  (1,'jerry','micael',
     '$2a$10$zjYnPNWQ7B5CtGzKqJGyMe7iaiosJthEhHlQZryQTpHOPiapbb4DS',
-    'admin','admin');`
+    'admin','admin');
 
 ### You can now control the API with the credentials:
 
