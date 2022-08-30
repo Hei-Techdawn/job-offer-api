@@ -22,8 +22,11 @@ public class MyUserController {
     }
 
     @GetMapping(value = "")
-    public List<MyUser> getUsers() {
-        return myUserService.getAllUsers();
+    public List<MyUser> getUsers(
+            @RequestParam(name = "page", required = false) Integer page,
+            @RequestParam(name = "size", required = false) Integer size
+    ) {
+        return myUserService.getAllUsers(page,size);
     }
 
     @GetMapping(value = "/{id}")

@@ -3,6 +3,7 @@ package com.example.initialapi.service;
 import com.example.initialapi.model.MyUser;
 import com.example.initialapi.repository.MyUserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,10 @@ public class MyUserService {
         return new BCryptPasswordEncoder();
     }
 
-    public List<MyUser> getAllUsers() {
+    public List<MyUser> getAllUsers(Integer page, Integer size) {
+        if (page != null && size != null) {
+            return myUserRepository.findAll(PageRequest.of(page, size)).toList();
+        }
         return myUserRepository.findAll();
     }
 
@@ -48,7 +52,7 @@ public class MyUserService {
         return myUserRepository.save(oldMyUser);
     }
 
-    public void deleteUser(int id){
+    public void deleteUser(int id) {
         myUserRepository.deleteById(id);
     }
 }
