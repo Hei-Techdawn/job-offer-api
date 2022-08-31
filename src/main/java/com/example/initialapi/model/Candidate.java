@@ -15,13 +15,11 @@ public class Candidate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
+    @Column(nullable = false)
+    private String lastName;
+    private String firstName;
     @Column(nullable = false, length = 100)
     private String email;
     @Column(nullable = false)
-    private int salary;
-    private String motivationLetter;
-    private String aboutUs;
-    @Column(nullable = false)
-    private String profile;
+    private String address;
 }

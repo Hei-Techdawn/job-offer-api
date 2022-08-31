@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "offer")
+@RequestMapping(value = "/offer")
 public class OfferController {
     private OfferService offerService;
 

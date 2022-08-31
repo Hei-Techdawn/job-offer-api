@@ -16,6 +16,7 @@ import java.util.Objects;
 public class OfferService {
     private OfferRepository offerRepository;
 
+//    TODO  : change status and ref value
     public DataFormat<Offer> getAll(Integer page, Integer size) {
         DataFormat<Offer> dataFormat = new DataFormat<>();
         if (page != null && size != null) {
@@ -40,6 +41,9 @@ public class OfferService {
 
     public Offer putById(int id, Offer offer) {
         Offer oldOffer = offerRepository.findById(id).get();
+        if(offer.getName() != null) {
+            oldOffer.setName(offer.getName());
+        }
         if (offer.getProfile() != null) {
             oldOffer.setProfile(offer.getProfile());
         }

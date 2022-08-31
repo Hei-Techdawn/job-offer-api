@@ -17,6 +17,8 @@ public class Offer {
     private int id;
     @Transient
     private String ref;
+    @Column(nullable = false)
+    private String name;
     @Transient
     private String status;
     @Transient

@@ -15,7 +15,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class DomainService {
     private DomainRepository domainRepository;
-
+//  TODO    : change candidateNumber value;
     public DataFormat<Domain> getAll(Integer page, Integer size) {
         DataFormat<Domain> dataFormat = new DataFormat<>();
         if (page != null && size != null) {
