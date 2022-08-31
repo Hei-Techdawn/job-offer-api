@@ -31,10 +31,10 @@ public class OfferValidator {
 
     public Offer changeRef(Offer offer) {
         String ref = "";
-        for (int i = 4 - (String.valueOf(offer.getId()).length()); i >= 1; i--) {
+        for (int i = 3 - (String.valueOf(offer.getId()).length()); i >= 1; i--) {
             ref += "0";
         }
-        offer.setRef("REF" + ref + offer.getId());
+        offer.setRef("REF-" + ref + offer.getId());
         return offer;
     }
 
