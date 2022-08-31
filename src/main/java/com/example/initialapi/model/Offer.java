@@ -3,7 +3,6 @@ package com.example.initialapi.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter
@@ -18,7 +17,11 @@ public class Offer {
     private int id;
     @Transient
     private String ref;
-    private String post;
+    @Transient
+    private String status;
+    @Transient
+    private int candidateNumber;
+    @Column(nullable = false)
     private String profile;
     @Column(nullable = false)
     private String place;

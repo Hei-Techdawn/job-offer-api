@@ -24,5 +24,4 @@ public class Candidate {
     private String aboutUs;
     @Column(nullable = false)
     private String profile;
-    private String post;
 }
