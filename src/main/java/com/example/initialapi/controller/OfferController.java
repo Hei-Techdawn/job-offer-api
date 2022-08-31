@@ -22,6 +22,15 @@ public class OfferController {
         return offerService.getAll(page, size);
     }
 
+    @GetMapping(value = "/domain/{id}")
+    public DataFormat<Offer> getOfferByIdDomain(
+            @PathVariable int id,
+            @RequestParam(name = "page", required = false) Integer page,
+            @RequestParam(name = "size", required = false) Integer size
+    ) {
+        return offerService.getByDomainId(page, size, id);
+    }
+
     @PostMapping(value = "")
     public List<Offer> saveAllOffer(@RequestBody List<Offer> offerList) {
         return offerService.saveAll(offerList);
