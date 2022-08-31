@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class ApplyService {
     private ApplyRepository applyRepository;
 
-    public DataFormat<Apply> getAllApply(Integer page, Integer size) {
+    public DataFormat<Apply> getAll(Integer page, Integer size) {
         DataFormat<Apply> applyDataFormat = new DataFormat<>();
         if (page != null && size != null) {
             applyDataFormat.format(page, size, applyRepository.countAll());
@@ -28,5 +28,9 @@ public class ApplyService {
 
     public Apply getById(int id) {
         return applyRepository.findById(id).get();
+    }
+
+    public Apply save(Apply apply) {
+        return applyRepository.save(apply);
     }
 }
