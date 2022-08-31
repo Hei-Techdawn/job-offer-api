@@ -3,6 +3,9 @@ package com.example.initialapi.controller;
 import com.example.initialapi.model.MyUser;
 import com.example.initialapi.service.MyUserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.config.web.servlet.SecurityMarker;
+import org.springframework.security.config.web.servlet.headers.HeadersSecurityMarker;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

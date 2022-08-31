@@ -26,7 +26,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(new BCryptPasswordEncoder());
-        log.warn("PASSWORD admin :  " + new BCryptPasswordEncoder().encode("admin"));
+        log.warn("PASSWORD admin :  " + new BCryptPasswordEncoder().encode("12345678"));
         return provider;
     }
 
@@ -34,9 +34,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-//                .antMatchers(HttpMethod.GET, "/").permitAll()
-//                .anyRequest().hasAuthority("admin")
-                .anyRequest().permitAll()
+                .antMatchers(HttpMethod.GET, "/").permitAll()
+                .antMatchers(HttpMethod.GET,"/offer").permitAll()
+                .antMatchers(HttpMethod.POST,"/apply").permitAll()
+                .anyRequest().hasAuthority("admin")
                 .and()
                 .formLogin()
                 .and()

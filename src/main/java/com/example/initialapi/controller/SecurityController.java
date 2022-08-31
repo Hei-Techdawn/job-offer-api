@@ -1,14 +1,21 @@
 package com.example.initialapi.controller;
 
+import org.springframework.security.config.web.servlet.headers.HeadersSecurityMarker;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "*")
-public class HelloWorldController {
+public class SecurityController {
     @GetMapping("/")
     public String helloWorld() {
         return "hello world";
+    }
+
+    @GetMapping(value = "/auth")
+    public Authentication authentication(@HeadersSecurityMarker Authentication authentication) {
+        return authentication;
     }
 }
