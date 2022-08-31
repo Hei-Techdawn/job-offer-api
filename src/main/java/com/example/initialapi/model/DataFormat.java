@@ -13,7 +13,7 @@ public class DataFormat<T> {
     private int lastPage;
     private int currentPage;
     private List<T> data;
-    
+
     public void format(int page, int size,int countAll) {
         this.setCurrentPage(page);
         int count = countAll;

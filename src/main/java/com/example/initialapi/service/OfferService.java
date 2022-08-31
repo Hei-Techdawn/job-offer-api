@@ -22,7 +22,7 @@ public class OfferService {
     public DataFormat<Offer> getAll(Integer page, Integer size) {
         DataFormat<Offer> dataFormat = new DataFormat<>();
         if (page != null && size != null) {
-            dataFormat.format(page, size, offerRepository.countOffer());
+            dataFormat.format(page, size, offerRepository.findAll().size());
             dataFormat.setData(
                     offerRepository.findAll(PageRequest.of(page, size)).toList()
             );

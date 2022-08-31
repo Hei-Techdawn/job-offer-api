@@ -16,7 +16,7 @@ public class HistoryService {
     public DataFormat<History> getAll(Integer page, Integer size) {
         DataFormat<History> historyDataFormat = new DataFormat<>();
         if (page != null && size != null) {
-            historyDataFormat.format(page, size, historyRepository.countAll());
+            historyDataFormat.format(page, size, historyRepository.findAll().size());
             historyDataFormat.setData(
                     historyRepository.findAll(PageRequest.of(page, size, Sort.by("date").descending())).toList()
             );

@@ -19,7 +19,7 @@ public class DomainService {
     public DataFormat<Domain> getAll(Integer page, Integer size) {
         DataFormat<Domain> dataFormat = new DataFormat<>();
         if (page != null && size != null) {
-            dataFormat.format(page, size, domainRepository.countDomain());
+            dataFormat.format(page, size, domainRepository.findAll().size());
             dataFormat.setData(
                     domainRepository.findAll(PageRequest.of(page, size)).toList()
             );

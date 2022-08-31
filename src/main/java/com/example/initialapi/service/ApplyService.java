@@ -16,7 +16,7 @@ public class ApplyService {
     public DataFormat<Apply> getAll(Integer page, Integer size) {
         DataFormat<Apply> applyDataFormat = new DataFormat<>();
         if (page != null && size != null) {
-            applyDataFormat.format(page, size, applyRepository.countAll());
+            applyDataFormat.format(page, size, applyRepository.findAll().size());
             applyDataFormat.setData(
                     applyRepository.findAll(PageRequest.of(page, size, Sort.by("date").descending())).toList()
             );
