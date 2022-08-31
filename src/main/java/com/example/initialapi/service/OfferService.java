@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +18,6 @@ public class OfferService {
     private HistoryRepository historyRepository;
     private OfferValidator offerValidator;
 
-    //    TODO  : change status and ref value
     public DataFormat<Offer> getAll(Integer page, Integer size) {
         DataFormat<Offer> dataFormat = new DataFormat<>();
         if (page != null && size != null) {
@@ -29,7 +27,7 @@ public class OfferService {
             );
             return dataFormat;
         }
-        dataFormat.setData(this.changeStatusList(offerRepository.findAll()));
+        dataFormat.setData(offerValidator.changeStatusList(offerRepository.findAll()));
         return dataFormat;
     }
 
@@ -46,27 +44,8 @@ public class OfferService {
         return offerDataFormat;
     }
 
-    public Offer changeStatus(Offer offer) {
-        try {
-            History history = historyRepository.findByOffer_IdAndType(offer.getId(), "unvailable");
-            offer.setStatus("unvailable");
-            return offer;
-        } catch (Exception e) {
-            offer.setStatus("vailable");
-            return offer;
-        }
-    }
-
-    public List<Offer> changeStatusList(List<Offer> offerList) {
-        List<Offer> offers = new ArrayList<>();
-        for (Offer offer : offerList) {
-            offers.add(this.changeStatus(offer));
-        }
-        return offers;
-    }
-
     public Offer save(Offer offer) {
-        Offer newOffer = offerRepository.save(offer);
+        Offer newOffer = offerValidator.changeStatusAndRef(offerRepository.save(offer));
         History history = new History();
         history.setType("createOffer");
         history.setOffer(newOffer);
@@ -75,7 +54,7 @@ public class OfferService {
     }
 
     public Offer getById(int id) {
-        return this.changeStatus(offerRepository.findById(id).get());
+        return offerValidator.changeStatusAndRef(offerRepository.findById(id).get());
     }
 
     public Offer putById(int id, Offer offer) {

@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface HistoryRepository extends JpaRepository<History, Integer> {
-    History findByOffer_IdAndType(int offerId, String type);
+    List<History> findByOffer_Id(int offerId);
 }

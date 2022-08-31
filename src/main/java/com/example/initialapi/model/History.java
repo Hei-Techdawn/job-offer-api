@@ -16,7 +16,7 @@ public class History {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
-    @Transient
+    @Column(nullable = false)
     private String type;
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
@@ -29,7 +29,10 @@ public class History {
 
 
     @PrePersist
-    public void prePersist(){
+    public void prePersist() {
+        if (candidate == null) {
+            this.type = "createOffer";
+        }
         this.date = new Date();
     }
 }

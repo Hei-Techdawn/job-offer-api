@@ -2,7 +2,9 @@ package com.example.initialapi.service;
 
 import com.example.initialapi.model.Apply;
 import com.example.initialapi.model.DataFormat;
+import com.example.initialapi.model.Domain;
 import com.example.initialapi.repository.ApplyRepository;
+import com.example.initialapi.repository.DomainRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ApplyService {
     private ApplyRepository applyRepository;
+    private DomainRepository domainRepository;
 
     public DataFormat<Apply> getAll(Integer page, Integer size) {
         DataFormat<Apply> applyDataFormat = new DataFormat<>();
@@ -31,6 +34,9 @@ public class ApplyService {
     }
 
     public Apply save(Apply apply) {
+        Domain domain = apply.getOffer().getDomain();
+        domain.setCandidateNumber(domain.getCandidateNumber() + 1);
+        domainRepository.save(domain);
         return applyRepository.save(apply);
     }
 }

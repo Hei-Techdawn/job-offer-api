@@ -30,6 +30,10 @@ public class CandidateService {
         return candidateDataFormat;
     }
 
+    public Candidate getById(int id) {
+        return candidateRepository.findById(id).get();
+    }
+
     @Transactional
     public List<Candidate> saveAll(List<Candidate> candidateList) {
         return candidateRepository.saveAll(candidateList);

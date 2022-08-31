@@ -6,8 +6,6 @@ import com.example.initialapi.service.OfferService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/offer")
@@ -32,7 +30,7 @@ public class OfferController {
     }
 
     @PostMapping(value = "")
-    public Offer saveAllOffer(@RequestBody Offer offer) {
+    public Offer saveOffer(@RequestBody Offer offer) {
         return offerService.save(offer);
     }
 

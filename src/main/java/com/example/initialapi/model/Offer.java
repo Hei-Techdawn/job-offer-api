@@ -21,8 +21,6 @@ public class Offer {
     private String name;
     @Transient
     private String status;
-    @Transient
-    private int candidateNumber;
     @Column(nullable = false)
     private String profile;
     @Column(nullable = false)

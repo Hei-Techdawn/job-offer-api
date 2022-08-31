@@ -18,6 +18,6 @@ public class Domain {
     @Column(nullable = false, length = 100)
     private String name;
     private String description;
-    @Transient
+    @Column(nullable = false)
     private int candidateNumber;
 }

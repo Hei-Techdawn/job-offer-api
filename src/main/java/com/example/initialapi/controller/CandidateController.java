@@ -27,6 +27,11 @@ public class CandidateController {
         return candidateService.saveAll(candidateList);
     }
 
+    @GetMapping(value = "/{id}")
+    public Candidate getCandidateById(@PathVariable int id) {
+        return candidateService.getById(id);
+    }
+
     @PutMapping(value = "/{id}")
     public Candidate putCandidateById(@PathVariable int id, @RequestBody Candidate candidate) {
         return candidateService.putById(id, candidate);

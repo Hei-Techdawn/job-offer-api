@@ -3,6 +3,7 @@ package com.example.initialapi.service;
 import com.example.initialapi.model.DataFormat;
 import com.example.initialapi.model.History;
 import com.example.initialapi.repository.HistoryRepository;
+import com.example.initialapi.validator.HistoryValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class HistoryService {
     private HistoryRepository historyRepository;
+    private HistoryValidator historyValidator;
 
     public DataFormat<History> getAll(Integer page, Integer size) {
         DataFormat<History> historyDataFormat = new DataFormat<>();
@@ -23,13 +25,16 @@ public class HistoryService {
             return historyDataFormat;
         }
         historyDataFormat.setData(
-                historyRepository.findAll(Sort.by("date").descending())
+                historyValidator.transientOfferInHistoryList(
+                        historyRepository.findAll(Sort.by("date").descending())
+                )
         );
         return historyDataFormat;
     }
 
     public History getById(int id) {
-        return historyRepository.findById(id).get();
+        History history = historyRepository.findById(id).get();
+        return historyValidator.transientOfferInHistory(history);
     }
 
     public History save(History history) {
