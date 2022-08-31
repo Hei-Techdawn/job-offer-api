@@ -1,9 +1,9 @@
 package com.example.initialapi.service;
 
-import com.example.initialapi.model.DataFormat;
-import com.example.initialapi.model.Domain;
-import com.example.initialapi.model.Offer;
+import com.example.initialapi.model.*;
+import com.example.initialapi.repository.HistoryRepository;
 import com.example.initialapi.repository.OfferRepository;
+import com.example.initialapi.validator.OfferValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -11,12 +11,13 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @AllArgsConstructor
 public class OfferService {
     private OfferRepository offerRepository;
+    private HistoryRepository historyRepository;
+    private OfferValidator offerValidator;
 
     //    TODO  : change status and ref value
     public DataFormat<Offer> getAll(Integer page, Integer size) {
@@ -28,7 +29,7 @@ public class OfferService {
             );
             return dataFormat;
         }
-        dataFormat.setData(offerRepository.findAll());
+        dataFormat.setData(this.changeStatusList(offerRepository.findAll()));
         return dataFormat;
     }
 
@@ -45,29 +46,37 @@ public class OfferService {
         return offerDataFormat;
     }
 
+    public Offer changeStatus(Offer offer) {
+        try {
+            History history = historyRepository.findByOffer_IdAndType(offer.getId(), "unvailable");
+            offer.setStatus("unvailable");
+            return offer;
+        } catch (Exception e) {
+            offer.setStatus("vailable");
+            return offer;
+        }
+    }
+
+    public List<Offer> changeStatusList(List<Offer> offerList) {
+        List<Offer> offers = new ArrayList<>();
+        for (Offer offer : offerList) {
+            offers.add(this.changeStatus(offer));
+        }
+        return offers;
+    }
+
     @Transactional
     public List<Offer> saveAll(List<Offer> offerList) {
         return offerRepository.saveAll(offerList);
     }
 
     public Offer getById(int id) {
-        return offerRepository.findById(id).get();
+        return this.changeStatus(offerRepository.findById(id).get());
     }
 
     public Offer putById(int id, Offer offer) {
         Offer oldOffer = offerRepository.findById(id).get();
-        if (offer.getName() != null) {
-            oldOffer.setName(offer.getName());
-        }
-        if (offer.getProfile() != null) {
-            oldOffer.setProfile(offer.getProfile());
-        }
-        if (offer.getPlace() != null) {
-            oldOffer.setPlace(offer.getPlace());
-        }
-        if (offer.getDomain() != null) {
-            oldOffer.setDomain(offer.getDomain());
-        }
-        return offerRepository.save(oldOffer);
+        Offer newOffer = offerValidator.validate(oldOffer, offer);
+        return offerRepository.save(newOffer);
     }
 }

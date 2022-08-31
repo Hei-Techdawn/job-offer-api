@@ -1,7 +1,9 @@
 package com.example.initialapi.validator;
 
 import com.example.initialapi.model.Candidate;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CandidateValidator {
     public Candidate validate(Candidate oldCandidate, Candidate candidate) {
         if (candidate.getLastName() != null) {
