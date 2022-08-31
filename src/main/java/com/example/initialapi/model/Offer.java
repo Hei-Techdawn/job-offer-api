@@ -22,6 +22,9 @@ public class Offer {
     @Transient
     private String status;
     @ManyToOne
+    @JoinColumn(name = "position_id")
+    private Position position;
+    @ManyToOne
     @JoinColumn(name = "place_id")
     private Place place;
     @ManyToOne
