@@ -21,10 +21,10 @@ public class Offer {
     private String name;
     @Transient
     private String status;
-    @Column(nullable = false)
-    private String profile;
-    @Column(nullable = false)
     private String place;
+    @ManyToOne
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
     @ManyToOne
     @JoinColumn(name = "domain_id")
     private Domain domain;
