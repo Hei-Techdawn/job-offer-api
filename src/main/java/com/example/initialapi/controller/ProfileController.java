@@ -27,6 +27,11 @@ public class ProfileController {
         return profileService.saveAll(profileList);
     }
 
+    @GetMapping(value = "/{id}")
+    public Profile getProfileById(@PathVariable int id) {
+        return profileService.getById(id);
+    }
+
     @PutMapping(value = "/{id}")
     public Profile putProfileById(@PathVariable int id, @RequestBody Profile profile) {
         return profileService.put(id, profile);
