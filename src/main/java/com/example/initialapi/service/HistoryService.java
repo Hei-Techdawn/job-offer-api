@@ -38,6 +38,9 @@ public class HistoryService {
     }
 
     public History save(History history) {
+        if(history.getCandidate() != null) {
+            history.setType("offerIntake");
+        }
         return historyRepository.save(history);
     }
 }

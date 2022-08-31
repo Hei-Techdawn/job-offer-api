@@ -38,7 +38,7 @@ public class OfferValidator {
         return offer;
     }
 
-    public List<Offer> changeStatusList(List<Offer> offerList) {
+    public List<Offer> changeStatusAndRefList(List<Offer> offerList) {
         List<Offer> offers = new ArrayList<>();
         for (Offer offer : offerList) {
             offers.add(this.changeStatusAndRef(offer));

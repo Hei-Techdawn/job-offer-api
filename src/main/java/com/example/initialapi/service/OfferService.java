@@ -23,11 +23,11 @@ public class OfferService {
         if (page != null && size != null) {
             dataFormat.format(page, size, offerRepository.findAll().size());
             dataFormat.setData(
-                    offerRepository.findAll(PageRequest.of(page, size)).toList()
+                    offerValidator.changeStatusAndRefList(offerRepository.findAll(PageRequest.of(page, size)).toList())
             );
             return dataFormat;
         }
-        dataFormat.setData(offerValidator.changeStatusList(offerRepository.findAll()));
+        dataFormat.setData(offerValidator.changeStatusAndRefList(offerRepository.findAll()));
         return dataFormat;
     }
 
@@ -40,7 +40,7 @@ public class OfferService {
                 offers.add(offer);
             }
         }
-        offerDataFormat.setData(offers);
+        offerDataFormat.setData(offerValidator.changeStatusAndRefList(offers));
         return offerDataFormat;
     }
 
@@ -53,14 +53,13 @@ public class OfferService {
                 offers.add(offer);
             }
         }
-        offerDataFormat.setData(offers);
+        offerDataFormat.setData(offerValidator.changeStatusAndRefList(offers));
         return offerDataFormat;
     }
 
     public Offer save(Offer offer) {
         Offer newOffer = offerValidator.changeStatusAndRef(offerRepository.save(offer));
         History history = new History();
-        history.setType("createOffer");
         history.setOffer(newOffer);
         historyRepository.save(history);
         return newOffer;
