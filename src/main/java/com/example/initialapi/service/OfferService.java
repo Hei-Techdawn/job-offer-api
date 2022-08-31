@@ -31,12 +31,25 @@ public class OfferService {
         return dataFormat;
     }
 
-    public DataFormat<Offer> getByDomainId(Integer page, Integer size, Integer idDomain) {
+    public DataFormat<Offer> getByDomainId(Integer page, Integer size, Integer domaineId) {
         DataFormat<Offer> offerDataFormat = this.getAll(page, size);
         List<Offer> offerList = offerDataFormat.getData();
         List<Offer> offers = new ArrayList<>();
         for (Offer offer : offerList) {
-            if (offer.getDomain().getId() == idDomain) {
+            if (offer.getDomain().getId() == domaineId) {
+                offers.add(offer);
+            }
+        }
+        offerDataFormat.setData(offers);
+        return offerDataFormat;
+    }
+
+    public DataFormat<Offer> getByProfileId(Integer page, Integer size, Integer profileId) {
+        DataFormat<Offer> offerDataFormat = this.getAll(page, size);
+        List<Offer> offerList = offerDataFormat.getData();
+        List<Offer> offers = new ArrayList<>();
+        for (Offer offer : offerList) {
+            if (offer.getProfile().getId() == profileId) {
                 offers.add(offer);
             }
         }

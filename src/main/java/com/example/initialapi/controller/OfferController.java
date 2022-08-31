@@ -29,6 +29,15 @@ public class OfferController {
         return offerService.getByDomainId(page, size, id);
     }
 
+    @GetMapping(value = "/profile/{id}")
+    public DataFormat<Offer> getOfferByProfileId(
+            @PathVariable int id,
+            @RequestParam(name = "page", required = false) Integer page,
+            @RequestParam(name = "size", required = false) Integer size
+    ) {
+        return offerService.getByProfileId(page, size, id);
+    }
+
     @PostMapping(value = "")
     public Offer saveOffer(@RequestBody Offer offer) {
         return offerService.save(offer);
