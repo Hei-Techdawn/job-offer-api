@@ -65,9 +65,13 @@ public class OfferService {
         return offers;
     }
 
-    @Transactional
-    public List<Offer> saveAll(List<Offer> offerList) {
-        return offerRepository.saveAll(offerList);
+    public Offer save(Offer offer) {
+        Offer newOffer = offerRepository.save(offer);
+        History history = new History();
+        history.setType("createOffer");
+        history.setOffer(newOffer);
+        historyRepository.save(history);
+        return newOffer;
     }
 
     public Offer getById(int id) {

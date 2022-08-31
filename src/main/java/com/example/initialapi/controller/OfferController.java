@@ -32,8 +32,8 @@ public class OfferController {
     }
 
     @PostMapping(value = "")
-    public List<Offer> saveAllOffer(@RequestBody List<Offer> offerList) {
-        return offerService.saveAll(offerList);
+    public Offer saveAllOffer(@RequestBody Offer offer) {
+        return offerService.save(offer);
     }
 
     @GetMapping(value = "/{id}")
