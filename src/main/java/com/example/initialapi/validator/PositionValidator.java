@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class PositionValidator {
     public Position validate(Position oldPosition, Position position) {
-        if (position.getPosition() != null) {
-            oldPosition.setPosition(position.getPosition());
+        if (position.getName() != null) {
+            oldPosition.setName(position.getName());
         }
         return oldPosition;
     }

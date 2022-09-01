@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 public class ProfileValidator {
 
     public Profile validate(Profile oldProfile, Profile newProfile) {
-        if(newProfile.getProfile() != null) {
-            oldProfile.setProfile(newProfile.getProfile());
+        if(newProfile.getName() != null) {
+            oldProfile.setName(newProfile.getName());
         }
         return oldProfile;
     }
