@@ -18,8 +18,6 @@ public class Apply {
     private int id;
     private String motivationLetter;
     @Column(nullable = false)
-    private String profile;
-    @Column(nullable = false)
     private int salary;
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;

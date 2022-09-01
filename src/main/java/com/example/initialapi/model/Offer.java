@@ -21,6 +21,8 @@ public class Offer {
     private String name;
     @Transient
     private String status;
+    @Transient
+    private int countCandidate;
     @ManyToOne
     @JoinColumn(name = "position_id")
     private Position position;
