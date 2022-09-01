@@ -1,10 +1,13 @@
 package com.example.initialapi.service;
 
 import com.example.initialapi.model.Apply;
+import com.example.initialapi.model.Candidate;
 import com.example.initialapi.model.DataFormat;
 import com.example.initialapi.model.Domain;
 import com.example.initialapi.repository.ApplyRepository;
+import com.example.initialapi.repository.CandidateRepository;
 import com.example.initialapi.repository.DomainRepository;
+import com.example.initialapi.validator.CandidateValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -14,7 +17,8 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ApplyService {
     private ApplyRepository applyRepository;
-    private DomainRepository domainRepository;
+    private CandidateValidator candidateValidator;
+    private CandidateRepository candidateRepository;
 
     public DataFormat<Apply> getAll(Integer page, Integer size) {
         DataFormat<Apply> applyDataFormat = new DataFormat<>();

@@ -1,7 +1,6 @@
 package com.example.initialapi.service;
 
 import com.example.initialapi.model.*;
-import com.example.initialapi.repository.ApplyRepository;
 import com.example.initialapi.repository.HistoryRepository;
 import com.example.initialapi.repository.OfferRepository;
 import com.example.initialapi.validator.OfferValidator;
@@ -18,9 +17,8 @@ public class OfferService {
     private OfferRepository offerRepository;
     private HistoryRepository historyRepository;
     private OfferValidator offerValidator;
-    private ApplyRepository applyRepository;
 
-    public DataFormat<Offer> getAll(Integer page, Integer size) {
+    public DataFormat<Offer> getAll(Integer page, Integer size,String sort) {
         DataFormat<Offer> dataFormat = new DataFormat<>();
         if (page != null && size != null) {
             dataFormat.format(page, size, offerRepository.findAll().size());
@@ -43,8 +41,8 @@ public class OfferService {
         return dataFormat;
     }
 
-    public DataFormat<Offer> getByDomainId(Integer page, Integer size, Integer domaineId) {
-        DataFormat<Offer> offerDataFormat = this.getAll(page, size);
+    public DataFormat<Offer> getByDomainId(Integer page, Integer size,String sort, Integer domaineId) {
+        DataFormat<Offer> offerDataFormat = this.getAll(page, size,sort);
         List<Offer> offerList = offerDataFormat.getData();
         List<Offer> offers = new ArrayList<>();
         for (Offer offer : offerList) {
@@ -60,8 +58,8 @@ public class OfferService {
         return offerDataFormat;
     }
 
-    public DataFormat<Offer> getByProfileId(Integer page, Integer size, Integer profileId) {
-        DataFormat<Offer> offerDataFormat = this.getAll(page, size);
+    public DataFormat<Offer> getByProfileId(Integer page, Integer size,String sort, Integer profileId) {
+        DataFormat<Offer> offerDataFormat = this.getAll(page, size,sort);
         List<Offer> offerList = offerDataFormat.getData();
         List<Offer> offers = new ArrayList<>();
         for (Offer offer : offerList) {
@@ -101,5 +99,20 @@ public class OfferService {
         Offer oldOffer = offerRepository.findById(id).get();
         Offer newOffer = offerValidator.validate(oldOffer, offer);
         return offerRepository.save(newOffer);
+    }
+
+    public List<Offer> sortByCountOffer(List<Offer> offerList) {
+        List<Offer> offers = new ArrayList<>();
+        while (offerList.size() > 0) {
+            int index = 0;
+            for (int i = 0; i < offerList.size(); i++) {
+                if (offerList.get(i).getCountCandidate() >= offerList.get(index).getCountCandidate()) {
+                    index = i;
+                }
+            }
+            offers.add(offerList.get(index));
+            offerList.remove(index);
+        }
+        return offers;
     }
 }
