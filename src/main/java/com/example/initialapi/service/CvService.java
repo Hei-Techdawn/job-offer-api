@@ -42,10 +42,10 @@ public class CvService {
         for (Cv cv : cvList) {
             String fileDownloadUri = ServletUriComponentsBuilder
                     .fromCurrentContextPath()
-                    .path("/files/")
-                    .path(cv.getName())
+                    .path("/cv/")
+                    .path(String.valueOf(cv.getId()))
                     .toUriString();
-            responseFileList.add(new ResponseFile(cv.getName(), fileDownloadUri, cv.getType(), cv.getData().length));
+            responseFileList.add(new ResponseFile(cv.getId(),cv.getName(), fileDownloadUri, cv.getType(), cv.getData().length));
         }
         return responseFileList;
     }

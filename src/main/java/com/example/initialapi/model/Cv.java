@@ -19,5 +19,6 @@ public class Cv {
     private int id;
     private String name;
     private String type;
+    @Lob
     private byte[] data;
 }
