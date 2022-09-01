@@ -47,12 +47,12 @@ public class OfferService {
         return dataFormat;
     }
 
-    public DataFormat<Offer> getByDomainId(Integer page, Integer size, String sort, Integer domaineId) {
+    public DataFormat<Offer> getByDomainId(Integer page, Integer size, String sort, Integer domainId) {
         DataFormat<Offer> offerDataFormat = this.getAll(page, size, sort);
         List<Offer> offerList = offerDataFormat.getData();
         List<Offer> offers = new ArrayList<>();
         for (Offer offer : offerList) {
-            if (offer.getDomain().getId() == domaineId) {
+            if (offer.getDomain().getId() == domainId) {
                 offers.add(offer);
             }
         }

@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ApplyService {
     private ApplyRepository applyRepository;
-    private CandidateValidator candidateValidator;
-    private CandidateRepository candidateRepository;
 
     public DataFormat<Apply> getAll(Integer page, Integer size) {
         DataFormat<Apply> applyDataFormat = new DataFormat<>();
