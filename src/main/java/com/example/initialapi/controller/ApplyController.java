@@ -26,6 +26,11 @@ public class ApplyController {
         return applyService.getByOfferId(offerId);
     }
 
+    @GetMapping(value = "/offer/domain/{domainId}")
+    public DataFormat<Apply> getByDomainId(@PathVariable int domainId) {
+        return applyService.getByDomainId(domainId);
+    }
+
     @PostMapping(value = "")
     public Apply saveApply(@RequestBody Apply apply) {
         return applyService.save(apply);

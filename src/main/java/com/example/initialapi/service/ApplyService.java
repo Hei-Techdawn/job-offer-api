@@ -1,17 +1,16 @@
 package com.example.initialapi.service;
 
 import com.example.initialapi.model.Apply;
-import com.example.initialapi.model.Candidate;
 import com.example.initialapi.model.DataFormat;
-import com.example.initialapi.model.Domain;
 import com.example.initialapi.repository.ApplyRepository;
-import com.example.initialapi.repository.CandidateRepository;
-import com.example.initialapi.repository.DomainRepository;
-import com.example.initialapi.validator.CandidateValidator;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -34,6 +33,19 @@ public class ApplyService {
     public DataFormat<Apply> getByOfferId(int offer) {
         DataFormat<Apply> applyDataFormat = new DataFormat<>();
         applyDataFormat.setData(applyRepository.findAllByOffer_Id(offer));
+        return applyDataFormat;
+    }
+
+    public DataFormat<Apply> getByDomainId(int domainId) {
+        DataFormat<Apply> applyDataFormat = new DataFormat<>();
+        List<Apply> all = applyRepository.findAll(Sort.by("date").descending());
+        List<Apply> allByDomain = new ArrayList<>();
+        for (Apply apply : all) {
+            if (apply.getOffer().getDomain().getId() == domainId) {
+                allByDomain.add(apply);
+            }
+        }
+        applyDataFormat.setData(allByDomain);
         return applyDataFormat;
     }
 
