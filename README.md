@@ -18,3 +18,5 @@ default admin user :
         username: admin,
         password: admin
     }
+
+### Swagger Api link: https://app.swaggerhub.com/apis-docs/HEIMINOSOA/Job-offers/1.0.0
