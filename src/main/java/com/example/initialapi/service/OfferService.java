@@ -18,31 +18,37 @@ public class OfferService {
     private HistoryRepository historyRepository;
     private OfferValidator offerValidator;
 
-    public DataFormat<Offer> getAll(Integer page, Integer size,String sort) {
+    public DataFormat<Offer> getAll(Integer page, Integer size, String sort) {
         DataFormat<Offer> dataFormat = new DataFormat<>();
         if (page != null && size != null) {
             dataFormat.format(page, size, offerRepository.findAll().size());
-            dataFormat.setData(
-                    offerValidator.changeCountCandidateList(
-                            offerValidator.changeStatusAndRefList(
-                                    offerRepository.findAll(PageRequest.of(page, size)).toList()
-                            )
+            List<Offer> data = offerValidator.changeCountCandidateList(
+                    offerValidator.changeStatusAndRefList(
+                            offerRepository.findAll(PageRequest.of(page, size)).toList()
                     )
             );
+            if (sort != null) {
+                dataFormat.setData(this.sortByCountOffer(data));
+            } else {
+                dataFormat.setData(data);
+            }
             return dataFormat;
         }
-        dataFormat.setData(
-                offerValidator.changeCountCandidateList(
-                        offerValidator.changeStatusAndRefList(
-                                offerRepository.findAll()
-                        )
+        List<Offer> data = offerValidator.changeCountCandidateList(
+                offerValidator.changeStatusAndRefList(
+                        offerRepository.findAll()
                 )
         );
+        if (sort != null) {
+            dataFormat.setData(this.sortByCountOffer(data));
+        } else {
+            dataFormat.setData(data);
+        }
         return dataFormat;
     }
 
-    public DataFormat<Offer> getByDomainId(Integer page, Integer size,String sort, Integer domaineId) {
-        DataFormat<Offer> offerDataFormat = this.getAll(page, size,sort);
+    public DataFormat<Offer> getByDomainId(Integer page, Integer size, String sort, Integer domaineId) {
+        DataFormat<Offer> offerDataFormat = this.getAll(page, size, sort);
         List<Offer> offerList = offerDataFormat.getData();
         List<Offer> offers = new ArrayList<>();
         for (Offer offer : offerList) {
@@ -58,8 +64,8 @@ public class OfferService {
         return offerDataFormat;
     }
 
-    public DataFormat<Offer> getByProfileId(Integer page, Integer size,String sort, Integer profileId) {
-        DataFormat<Offer> offerDataFormat = this.getAll(page, size,sort);
+    public DataFormat<Offer> getByProfileId(Integer page, Integer size, String sort, Integer profileId) {
+        DataFormat<Offer> offerDataFormat = this.getAll(page, size, sort);
         List<Offer> offerList = offerDataFormat.getData();
         List<Offer> offers = new ArrayList<>();
         for (Offer offer : offerList) {
