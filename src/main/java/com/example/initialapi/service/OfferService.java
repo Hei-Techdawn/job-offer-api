@@ -1,6 +1,7 @@
 package com.example.initialapi.service;
 
 import com.example.initialapi.model.*;
+import com.example.initialapi.repository.ApplyRepository;
 import com.example.initialapi.repository.HistoryRepository;
 import com.example.initialapi.repository.OfferRepository;
 import com.example.initialapi.validator.OfferValidator;
@@ -17,17 +18,28 @@ public class OfferService {
     private OfferRepository offerRepository;
     private HistoryRepository historyRepository;
     private OfferValidator offerValidator;
+    private ApplyRepository applyRepository;
 
     public DataFormat<Offer> getAll(Integer page, Integer size) {
         DataFormat<Offer> dataFormat = new DataFormat<>();
         if (page != null && size != null) {
             dataFormat.format(page, size, offerRepository.findAll().size());
             dataFormat.setData(
-                    offerValidator.changeStatusAndRefList(offerRepository.findAll(PageRequest.of(page, size)).toList())
+                    offerValidator.changeCountCandidateList(
+                            offerValidator.changeStatusAndRefList(
+                                    offerRepository.findAll(PageRequest.of(page, size)).toList()
+                            )
+                    )
             );
             return dataFormat;
         }
-        dataFormat.setData(offerValidator.changeStatusAndRefList(offerRepository.findAll()));
+        dataFormat.setData(
+                offerValidator.changeCountCandidateList(
+                        offerValidator.changeStatusAndRefList(
+                                offerRepository.findAll()
+                        )
+                )
+        );
         return dataFormat;
     }
 
@@ -40,7 +52,11 @@ public class OfferService {
                 offers.add(offer);
             }
         }
-        offerDataFormat.setData(offerValidator.changeStatusAndRefList(offers));
+        offerDataFormat.setData(
+                offerValidator.changeCountCandidateList(
+                        offerValidator.changeStatusAndRefList(offers)
+                )
+        );
         return offerDataFormat;
     }
 
@@ -53,12 +69,20 @@ public class OfferService {
                 offers.add(offer);
             }
         }
-        offerDataFormat.setData(offerValidator.changeStatusAndRefList(offers));
+        offerDataFormat.setData(
+                offerValidator.changeCountCandidateList(
+                        offerValidator.changeStatusAndRefList(offers)
+                )
+        );
         return offerDataFormat;
     }
 
     public Offer save(Offer offer) {
-        Offer newOffer = offerValidator.changeStatusAndRef(offerRepository.save(offer));
+        Offer newOffer = offerValidator.changeStatusAndRef(
+                offerValidator.changeCountCandidate(
+                        offerRepository.save(offer)
+                )
+        );
         History history = new History();
         history.setOffer(newOffer);
         historyRepository.save(history);
@@ -66,7 +90,11 @@ public class OfferService {
     }
 
     public Offer getById(int id) {
-        return offerValidator.changeStatusAndRef(offerRepository.findById(id).get());
+        return offerValidator.changeStatusAndRef(
+                offerValidator.changeCountCandidate(
+                        offerRepository.findById(id).get()
+                )
+        );
     }
 
     public Offer putById(int id, Offer offer) {

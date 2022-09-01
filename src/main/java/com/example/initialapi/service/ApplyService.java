@@ -34,9 +34,6 @@ public class ApplyService {
     }
 
     public Apply save(Apply apply) {
-        Domain domain = apply.getOffer().getDomain();
-        domain.setCandidateNumber(domain.getCandidateNumber() + 1);
-        domainRepository.save(domain);
         return applyRepository.save(apply);
     }
 }

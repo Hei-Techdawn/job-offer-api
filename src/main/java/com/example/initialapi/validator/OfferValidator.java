@@ -2,6 +2,7 @@ package com.example.initialapi.validator;
 
 import com.example.initialapi.model.History;
 import com.example.initialapi.model.Offer;
+import com.example.initialapi.repository.ApplyRepository;
 import com.example.initialapi.repository.HistoryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 public class OfferValidator {
     private HistoryRepository historyRepository;
+    private ApplyRepository applyRepository;
+
     public Offer validate(Offer oldOffer, Offer offer) {
         if (offer.getName() != null) {
             oldOffer.setName(offer.getName());
@@ -61,5 +64,19 @@ public class OfferValidator {
             offer.setStatus("vailable");
             return this.changeRef(offer);
         }
+    }
+
+    public Offer changeCountCandidate(Offer offer) {
+        int countCandidate = applyRepository.findAllByOffer_Id(offer.getId()).size();
+        offer.setCountCandidate(countCandidate);
+        return offer;
+    }
+
+    public List<Offer> changeCountCandidateList(List<Offer> offerList) {
+        List<Offer> offers = new ArrayList<>();
+        for (Offer offer : offerList) {
+            offers.add(this.changeCountCandidate(offer));
+        }
+        return offers;
     }
 }
