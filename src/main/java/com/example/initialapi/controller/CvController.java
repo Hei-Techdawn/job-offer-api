@@ -4,6 +4,7 @@ import com.example.initialapi.model.Cv;
 import com.example.initialapi.model.ResponseFile;
 import com.example.initialapi.service.CvService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,13 +31,15 @@ public class CvController {
     }
 
     @GetMapping(value = "")
-    public List<ResponseFile> getAllCv() {
-        return cvService.getResponseFile();
+    public ResponseEntity<List<ResponseFile>> getAllCv() {
+        return ResponseEntity.ok().body(cvService.getResponseFile());
     }
 
     @GetMapping("/{id}")
-    public byte[] getFile(@PathVariable int id) {
+    public ResponseEntity<byte[]> getFile(@PathVariable int id) {
         Cv cv = cvService.getById(id);
-        return cv.getData();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + cv.getName() + "\"")
+                .body(cv.getData());
     }
 }
