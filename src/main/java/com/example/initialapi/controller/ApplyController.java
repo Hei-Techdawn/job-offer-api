@@ -21,6 +21,11 @@ public class ApplyController {
         return applyService.getAll(page, size);
     }
 
+    @GetMapping(value = "/offer/{offerId}")
+    public DataFormat<Apply> getAllApplyByOfferId(@PathVariable int offerId) {
+        return applyService.getByOfferId(offerId);
+    }
+
     @PostMapping(value = "")
     public Apply saveApply(@RequestBody Apply apply) {
         return applyService.save(apply);

@@ -31,6 +31,12 @@ public class ApplyService {
         return applyDataFormat;
     }
 
+    public DataFormat<Apply> getByOfferId(int offer) {
+        DataFormat<Apply> applyDataFormat = new DataFormat<>();
+        applyDataFormat.setData(applyRepository.findAllByOffer_Id(offer));
+        return applyDataFormat;
+    }
+
     public Apply getById(int id) {
         return applyRepository.findById(id).get();
     }
