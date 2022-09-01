@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/place")
+@CrossOrigin(origins = "*")
 public class PlaceController {
     private PlaceService placeService;
 

@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/cv")
+@CrossOrigin(origins = "*")
 public class CvController {
     private CvService cvService;
 

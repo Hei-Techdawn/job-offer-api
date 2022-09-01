@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/domain")
+@CrossOrigin(origins = "*")
 public class DomainController {
     private DomainService domainService;
 

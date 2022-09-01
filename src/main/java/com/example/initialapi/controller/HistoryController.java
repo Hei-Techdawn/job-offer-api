@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/history")
+@CrossOrigin(origins = "*")
 public class HistoryController {
     private HistoryService historyService;
 

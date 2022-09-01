@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/apply")
+@CrossOrigin(origins = "*")
 public class ApplyController {
     private ApplyService applyService;
 

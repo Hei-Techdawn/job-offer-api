@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/profile")
+@CrossOrigin(origins = "*")
 public class ProfileController {
     private ProfileService profileService;
 
