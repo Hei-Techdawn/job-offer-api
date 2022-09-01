@@ -23,6 +23,9 @@ public class Apply implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @ManyToOne
+    @JoinColumn(name = "cv_id")
+    private Cv cv;
+    @ManyToOne
     @JoinColumn(name = "offer_id")
     private Offer offer;
     @ManyToOne
